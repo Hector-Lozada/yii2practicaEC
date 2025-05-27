@@ -7,6 +7,7 @@ use app\models\UsuariosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * UsuariosController implements the CRUD actions for Usuarios model.
@@ -21,6 +22,16 @@ class UsuariosController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                // Protege todas las acciones: solo usuarios autenticados pueden acceder
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'allow' => true,
+                            'roles' => ['@'],
+                        ],
+                    ],
+                ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [

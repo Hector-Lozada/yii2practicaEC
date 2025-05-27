@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use yii\filters\AccessControl;
 
 /**
  * ProductosController implements the CRUD actions for Productos model.
@@ -22,6 +23,16 @@ class ProductosController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                // Protege todas las acciones: solo usuarios autenticados pueden acceder
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'allow' => true,
+                            'roles' => ['@'],
+                        ],
+                    ],
+                ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [

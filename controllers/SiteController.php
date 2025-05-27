@@ -16,27 +16,26 @@ class SiteController extends Controller
      * {@inheritdoc}
      */
     public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::class,
-                'only' => ['logout'],
-                'rules' => [
-                    [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
+{
+    return [
+        'access' => [
+            'class' => AccessControl::class,
+            // Proteger todas las acciones excepto login, error y captcha
+            'except' => ['login', 'error', 'captcha'],
+            'rules' => [
+                [
+                    'allow' => true,
                 ],
             ],
-            'verbs' => [
-                'class' => VerbFilter::class,
-                'actions' => [
-                    'logout' => ['post'],
-                ],
+        ],
+        'verbs' => [
+            'class' => VerbFilter::class,
+            'actions' => [
+                'logout' => ['post'],
             ],
-        ];
-    }
+        ],
+    ];
+}
 
     /**
      * {@inheritdoc}
@@ -125,4 +124,6 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+
+    
 }
