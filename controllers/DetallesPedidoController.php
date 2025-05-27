@@ -2,16 +2,16 @@
 
 namespace app\controllers;
 
-use app\models\Detalles;
-use app\models\DetallesSearch;
+use app\models\DetallesPedido;
+use app\models\DetallesPedidoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * DetallesController implements the CRUD actions for Detalles model.
+ * DetallesPedidoController implements the CRUD actions for DetallesPedido model.
  */
-class DetallesController extends Controller
+class DetallesPedidoController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,13 +32,13 @@ class DetallesController extends Controller
     }
 
     /**
-     * Lists all Detalles models.
+     * Lists all DetallesPedido models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new DetallesSearch();
+        $searchModel = new DetallesPedidoSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -48,7 +48,7 @@ class DetallesController extends Controller
     }
 
     /**
-     * Displays a single Detalles model.
+     * Displays a single DetallesPedido model.
      * @param int $id_detalle Id Detalle
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -61,13 +61,13 @@ class DetallesController extends Controller
     }
 
     /**
-     * Creates a new Detalles model.
+     * Creates a new DetallesPedido model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Detalles();
+        $model = new DetallesPedido();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -83,7 +83,7 @@ class DetallesController extends Controller
     }
 
     /**
-     * Updates an existing Detalles model.
+     * Updates an existing DetallesPedido model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id_detalle Id Detalle
      * @return string|\yii\web\Response
@@ -103,7 +103,7 @@ class DetallesController extends Controller
     }
 
     /**
-     * Deletes an existing Detalles model.
+     * Deletes an existing DetallesPedido model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id_detalle Id Detalle
      * @return \yii\web\Response
@@ -117,15 +117,15 @@ class DetallesController extends Controller
     }
 
     /**
-     * Finds the Detalles model based on its primary key value.
+     * Finds the DetallesPedido model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id_detalle Id Detalle
-     * @return Detalles the loaded model
+     * @return DetallesPedido the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id_detalle)
     {
-        if (($model = Detalles::findOne(['id_detalle' => $id_detalle])) !== null) {
+        if (($model = DetallesPedido::findOne(['id_detalle' => $id_detalle])) !== null) {
             return $model;
         }
 

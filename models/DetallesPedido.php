@@ -16,7 +16,7 @@ use Yii;
  * @property Pedidos $pedido
  * @property Productos $producto
  */
-class Detalles extends \yii\db\ActiveRecord
+class DetallesPedido extends \yii\db\ActiveRecord
 {
 
 
@@ -79,11 +79,11 @@ class Detalles extends \yii\db\ActiveRecord
 
     /**
      * {@inheritdoc}
-     * @return DetallesQuery the active query used by this AR class.
+     * @return DetallesPedidoQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new DetallesQuery(get_called_class());
+        return new DetallesPedidoQuery(get_called_class());
     }
 
 }

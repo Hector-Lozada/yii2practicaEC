@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'idproductos') ?>
+    <?= $form->field($model, 'id_producto') ?>
 
     <?= $form->field($model, 'nombre') ?>
 
@@ -27,6 +27,10 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'precio') ?>
 
     <?= $form->field($model, 'stock') ?>
+
+    <?php // echo $form->field($model, 'id_categoria') ?>
+
+    <?php // echo $form->field($model, 'imagen_url') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>

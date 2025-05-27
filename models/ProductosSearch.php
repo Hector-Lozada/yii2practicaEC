@@ -17,8 +17,8 @@ class ProductosSearch extends Productos
     public function rules()
     {
         return [
-            [['idproductos', 'stock'], 'integer'],
-            [['nombre', 'descripcion'], 'safe'],
+            [['id_producto', 'stock', 'id_categoria'], 'integer'],
+            [['nombre', 'descripcion', 'imagen_url'], 'safe'],
             [['precio'], 'number'],
         ];
     }
@@ -60,13 +60,15 @@ class ProductosSearch extends Productos
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'idproductos' => $this->idproductos,
+            'id_producto' => $this->id_producto,
             'precio' => $this->precio,
             'stock' => $this->stock,
+            'id_categoria' => $this->id_categoria,
         ]);
 
         $query->andFilterWhere(['like', 'nombre', $this->nombre])
-            ->andFilterWhere(['like', 'descripcion', $this->descripcion]);
+            ->andFilterWhere(['like', 'descripcion', $this->descripcion])
+            ->andFilterWhere(['like', 'imagen_url', $this->imagen_url]);
 
         return $dataProvider;
     }

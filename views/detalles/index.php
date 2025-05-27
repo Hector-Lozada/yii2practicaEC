@@ -6,6 +6,10 @@ use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use yii\helpers\ArrayHelper;
+use app\models\Pedidos;
+use app\models\Productos;
+
 /** @var yii\web\View $this */
 /** @var app\models\DetallesSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
@@ -30,15 +34,39 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'iddetalles',
-            'venta_id',
-            'producto_id',
+            'id_detalle',
+            [
+                'attribute' => 'id_pedido',
+                'label' => 'Pedido',
+                'value' => function ($model) {
+                    return $model->pedido
+                        ? ('Pedido #' . $model->pedido->id_pedido . ' (' . Yii::$app->formatter->asDate($model->pedido->fecha_pedido) . ')')
+                        : '(Sin pedido)';
+                },
+                'filter' => ArrayHelper::map(
+                    Pedidos::find()->all(),
+                    'id_pedido',
+                    function($pedido) {
+                        return 'Pedido #' . $pedido->id_pedido . ' (' . Yii::$app->formatter->asDate($pedido->fecha_pedido) . ')';
+                    }
+                ),
+            ],
+            [
+                'attribute' => 'id_producto',
+                'label' => 'Producto',
+                'value' => function ($model) {
+                    return $model->producto
+                        ? $model->producto->nombre
+                        : '(Sin producto)';
+                },
+                'filter' => ArrayHelper::map(Productos::find()->all(), 'id_producto', 'nombre'),
+            ],
             'cantidad',
             'precio_unitario',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Detalles $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'iddetalles' => $model->iddetalles]);
+                    return Url::toRoute([$action, 'id_detalle' => $model->id_detalle]);
                  }
             ],
         ],

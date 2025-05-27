@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Detalles;
+use app\models\Usuarios;
 
 /**
- * DetallesSearch represents the model behind the search form of `app\models\Detalles`.
+ * UsuariosSearch represents the model behind the search form of `app\models\Usuarios`.
  */
-class DetallesSearch extends Detalles
+class UsuariosSearch extends Usuarios
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class DetallesSearch extends Detalles
     public function rules()
     {
         return [
-            [['id_detalle', 'id_pedido', 'id_producto', 'cantidad'], 'integer'],
-            [['precio_unitario'], 'number'],
+            [['id_usuario'], 'integer'],
+            [['nombre', 'correo', 'contraseña', 'fecha_registro'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class DetallesSearch extends Detalles
      */
     public function search($params, $formName = null)
     {
-        $query = Detalles::find();
+        $query = Usuarios::find();
 
         // add conditions that should always apply here
 
@@ -59,12 +59,13 @@ class DetallesSearch extends Detalles
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id_detalle' => $this->id_detalle,
-            'id_pedido' => $this->id_pedido,
-            'id_producto' => $this->id_producto,
-            'cantidad' => $this->cantidad,
-            'precio_unitario' => $this->precio_unitario,
+            'id_usuario' => $this->id_usuario,
+            'fecha_registro' => $this->fecha_registro,
         ]);
+
+        $query->andFilterWhere(['like', 'nombre', $this->nombre])
+            ->andFilterWhere(['like', 'correo', $this->correo])
+            ->andFilterWhere(['like', 'contraseña', $this->contraseña]);
 
         return $dataProvider;
     }

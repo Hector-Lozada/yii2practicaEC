@@ -2,16 +2,16 @@
 
 namespace app\controllers;
 
-use app\models\Detalles;
-use app\models\DetallesSearch;
+use app\models\Usuarios;
+use app\models\UsuariosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * DetallesController implements the CRUD actions for Detalles model.
+ * UsuariosController implements the CRUD actions for Usuarios model.
  */
-class DetallesController extends Controller
+class UsuariosController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,13 +32,13 @@ class DetallesController extends Controller
     }
 
     /**
-     * Lists all Detalles models.
+     * Lists all Usuarios models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new DetallesSearch();
+        $searchModel = new UsuariosSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -48,30 +48,30 @@ class DetallesController extends Controller
     }
 
     /**
-     * Displays a single Detalles model.
-     * @param int $id_detalle Id Detalle
+     * Displays a single Usuarios model.
+     * @param int $id_usuario Id Usuario
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id_detalle)
+    public function actionView($id_usuario)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id_detalle),
+            'model' => $this->findModel($id_usuario),
         ]);
     }
 
     /**
-     * Creates a new Detalles model.
+     * Creates a new Usuarios model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Detalles();
+        $model = new Usuarios();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id_detalle' => $model->id_detalle]);
+                return $this->redirect(['view', 'id_usuario' => $model->id_usuario]);
             }
         } else {
             $model->loadDefaultValues();
@@ -83,18 +83,18 @@ class DetallesController extends Controller
     }
 
     /**
-     * Updates an existing Detalles model.
+     * Updates an existing Usuarios model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id_detalle Id Detalle
+     * @param int $id_usuario Id Usuario
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id_detalle)
+    public function actionUpdate($id_usuario)
     {
-        $model = $this->findModel($id_detalle);
+        $model = $this->findModel($id_usuario);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id_detalle' => $model->id_detalle]);
+            return $this->redirect(['view', 'id_usuario' => $model->id_usuario]);
         }
 
         return $this->render('update', [
@@ -103,29 +103,29 @@ class DetallesController extends Controller
     }
 
     /**
-     * Deletes an existing Detalles model.
+     * Deletes an existing Usuarios model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id_detalle Id Detalle
+     * @param int $id_usuario Id Usuario
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id_detalle)
+    public function actionDelete($id_usuario)
     {
-        $this->findModel($id_detalle)->delete();
+        $this->findModel($id_usuario)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Detalles model based on its primary key value.
+     * Finds the Usuarios model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id_detalle Id Detalle
-     * @return Detalles the loaded model
+     * @param int $id_usuario Id Usuario
+     * @return Usuarios the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id_detalle)
+    protected function findModel($id_usuario)
     {
-        if (($model = Detalles::findOne(['id_detalle' => $id_detalle])) !== null) {
+        if (($model = Usuarios::findOne(['id_usuario' => $id_usuario])) !== null) {
             return $model;
         }
 

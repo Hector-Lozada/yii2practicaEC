@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Detalles;
+use app\models\DetallesPedido;
 
 /**
- * DetallesSearch represents the model behind the search form of `app\models\Detalles`.
+ * DetallesPedidoSearch represents the model behind the search form of `app\models\DetallesPedido`.
  */
-class DetallesSearch extends Detalles
+class DetallesPedidoSearch extends DetallesPedido
 {
     /**
      * {@inheritdoc}
@@ -41,7 +41,7 @@ class DetallesSearch extends Detalles
      */
     public function search($params, $formName = null)
     {
-        $query = Detalles::find();
+        $query = DetallesPedido::find();
 
         // add conditions that should always apply here
 

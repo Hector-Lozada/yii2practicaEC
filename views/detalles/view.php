@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /** @var yii\web\View $this */
 /** @var app\models\Detalles $model */
 
-$this->title = $model->iddetalles;
+$this->title = $model->id_detalle;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Detalles'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -16,8 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'iddetalles' => $model->iddetalles], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'iddetalles' => $model->iddetalles], [
+        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id_detalle' => $model->id_detalle], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id_detalle' => $model->id_detalle], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
@@ -29,9 +29,21 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'iddetalles',
-            'venta_id',
-            'producto_id',
+            'id_detalle',
+            [
+                'attribute' => 'id_pedido',
+                'label' => 'Pedido',
+                'value' => $model->pedido
+                    ? ('Pedido #' . $model->pedido->id_pedido . ' (' . Yii::$app->formatter->asDate($model->pedido->fecha_pedido) . ')')
+                    : '(Sin pedido)',
+            ],
+            [
+                'attribute' => 'id_producto',
+                'label' => 'Producto',
+                'value' => $model->producto
+                    ? $model->producto->nombre
+                    : '(Sin producto)',
+            ],
             'cantidad',
             'precio_unitario',
         ],

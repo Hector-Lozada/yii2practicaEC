@@ -2,16 +2,16 @@
 
 namespace app\controllers;
 
-use app\models\Detalles;
-use app\models\DetallesSearch;
+use app\models\Pedidos;
+use app\models\PedidosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * DetallesController implements the CRUD actions for Detalles model.
+ * PedidosController implements the CRUD actions for Pedidos model.
  */
-class DetallesController extends Controller
+class PedidosController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,13 +32,13 @@ class DetallesController extends Controller
     }
 
     /**
-     * Lists all Detalles models.
+     * Lists all Pedidos models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new DetallesSearch();
+        $searchModel = new PedidosSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -48,30 +48,30 @@ class DetallesController extends Controller
     }
 
     /**
-     * Displays a single Detalles model.
-     * @param int $id_detalle Id Detalle
+     * Displays a single Pedidos model.
+     * @param int $id_pedido Id Pedido
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id_detalle)
+    public function actionView($id_pedido)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id_detalle),
+            'model' => $this->findModel($id_pedido),
         ]);
     }
 
     /**
-     * Creates a new Detalles model.
+     * Creates a new Pedidos model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Detalles();
+        $model = new Pedidos();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id_detalle' => $model->id_detalle]);
+                return $this->redirect(['view', 'id_pedido' => $model->id_pedido]);
             }
         } else {
             $model->loadDefaultValues();
@@ -83,18 +83,18 @@ class DetallesController extends Controller
     }
 
     /**
-     * Updates an existing Detalles model.
+     * Updates an existing Pedidos model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id_detalle Id Detalle
+     * @param int $id_pedido Id Pedido
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id_detalle)
+    public function actionUpdate($id_pedido)
     {
-        $model = $this->findModel($id_detalle);
+        $model = $this->findModel($id_pedido);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id_detalle' => $model->id_detalle]);
+            return $this->redirect(['view', 'id_pedido' => $model->id_pedido]);
         }
 
         return $this->render('update', [
@@ -103,29 +103,29 @@ class DetallesController extends Controller
     }
 
     /**
-     * Deletes an existing Detalles model.
+     * Deletes an existing Pedidos model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id_detalle Id Detalle
+     * @param int $id_pedido Id Pedido
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id_detalle)
+    public function actionDelete($id_pedido)
     {
-        $this->findModel($id_detalle)->delete();
+        $this->findModel($id_pedido)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Detalles model based on its primary key value.
+     * Finds the Pedidos model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id_detalle Id Detalle
-     * @return Detalles the loaded model
+     * @param int $id_pedido Id Pedido
+     * @return Pedidos the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id_detalle)
+    protected function findModel($id_pedido)
     {
-        if (($model = Detalles::findOne(['id_detalle' => $id_detalle])) !== null) {
+        if (($model = Pedidos::findOne(['id_pedido' => $id_pedido])) !== null) {
             return $model;
         }
 

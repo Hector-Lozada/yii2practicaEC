@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Detalles;
+use app\models\Pedidos;
 
 /**
- * DetallesSearch represents the model behind the search form of `app\models\Detalles`.
+ * PedidosSearch represents the model behind the search form of `app\models\Pedidos`.
  */
-class DetallesSearch extends Detalles
+class PedidosSearch extends Pedidos
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,9 @@ class DetallesSearch extends Detalles
     public function rules()
     {
         return [
-            [['id_detalle', 'id_pedido', 'id_producto', 'cantidad'], 'integer'],
-            [['precio_unitario'], 'number'],
+            [['id_pedido', 'id_usuario'], 'integer'],
+            [['fecha_pedido', 'estado'], 'safe'],
+            [['total'], 'number'],
         ];
     }
 
@@ -41,7 +42,7 @@ class DetallesSearch extends Detalles
      */
     public function search($params, $formName = null)
     {
-        $query = Detalles::find();
+        $query = Pedidos::find();
 
         // add conditions that should always apply here
 
@@ -59,12 +60,13 @@ class DetallesSearch extends Detalles
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id_detalle' => $this->id_detalle,
             'id_pedido' => $this->id_pedido,
-            'id_producto' => $this->id_producto,
-            'cantidad' => $this->cantidad,
-            'precio_unitario' => $this->precio_unitario,
+            'id_usuario' => $this->id_usuario,
+            'fecha_pedido' => $this->fecha_pedido,
+            'total' => $this->total,
         ]);
+
+        $query->andFilterWhere(['like', 'estado', $this->estado]);
 
         return $dataProvider;
     }

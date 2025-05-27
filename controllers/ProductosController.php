@@ -7,6 +7,7 @@ use app\models\ProductosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * ProductosController implements the CRUD actions for Productos model.
@@ -49,14 +50,14 @@ class ProductosController extends Controller
 
     /**
      * Displays a single Productos model.
-     * @param int $idproductos Idproductos
+     * @param int $id_producto Id Producto
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($idproductos)
+    public function actionView($id_producto)
     {
         return $this->render('view', [
-            'model' => $this->findModel($idproductos),
+            'model' => $this->findModel($id_producto),
         ]);
     }
 
@@ -70,8 +71,15 @@ class ProductosController extends Controller
         $model = new Productos();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'idproductos' => $model->idproductos]);
+            if ($model->load($this->request->post())) {
+                $model->imagenFile = UploadedFile::getInstance($model, 'imagenFile');
+                
+                if ($model->validate()) {
+                    // Try to upload image and save model
+                    if ($model->uploadImage() && $model->save(false)) {
+                        return $this->redirect(['view', 'id_producto' => $model->id_producto]);
+                    }
+                }
             }
         } else {
             $model->loadDefaultValues();
@@ -85,16 +93,34 @@ class ProductosController extends Controller
     /**
      * Updates an existing Productos model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $idproductos Idproductos
+     * @param int $id_producto Id Producto
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($idproductos)
+    public function actionUpdate($id_producto)
     {
-        $model = $this->findModel($idproductos);
+        $model = $this->findModel($id_producto);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'idproductos' => $model->idproductos]);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $model->imagenFile = UploadedFile::getInstance($model, 'imagenFile');
+            
+            if ($model->validate()) {
+                // Only upload new image if one was selected
+                if ($model->imagenFile) {
+                    // Delete old image if it exists
+                    if ($model->imagen_url) {
+                        $oldImagePath = Yii::getAlias('@webroot') . $model->imagen_url;
+                        if (file_exists($oldImagePath)) {
+                            unlink($oldImagePath);
+                        }
+                    }
+                    $model->uploadImage();
+                }
+                
+                if ($model->save(false)) {
+                    return $this->redirect(['view', 'id_producto' => $model->id_producto]);
+                }
+            }
         }
 
         return $this->render('update', [
@@ -105,13 +131,23 @@ class ProductosController extends Controller
     /**
      * Deletes an existing Productos model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $idproductos Idproductos
+     * @param int $id_producto Id Producto
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($idproductos)
+    public function actionDelete($id_producto)
     {
-        $this->findModel($idproductos)->delete();
+        $model = $this->findModel($id_producto);
+        
+        // Delete the associated image file if it exists
+        if ($model->imagen_url) {
+            $imagePath = Yii::getAlias('@webroot') . $model->imagen_url;
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }
+        
+        $model->delete();
 
         return $this->redirect(['index']);
     }
@@ -119,13 +155,13 @@ class ProductosController extends Controller
     /**
      * Finds the Productos model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $idproductos Idproductos
+     * @param int $id_producto Id Producto
      * @return Productos the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($idproductos)
+    protected function findModel($id_producto)
     {
-        if (($model = Productos::findOne(['idproductos' => $idproductos])) !== null) {
+        if (($model = Productos::findOne(['id_producto' => $id_producto])) !== null) {
             return $model;
         }
 

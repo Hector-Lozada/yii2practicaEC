@@ -2,8 +2,8 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=192.168.56.2;dbname=SistemaVentas',
-    'username' => 'remote_est_echichande',
+    'dsn' => 'mysql:host=192.168.56.2;dbname=e_comerce',
+    'username' => 'remote_estu_echichande',
     'password' => '1234567890',
     'charset' => 'utf8',
 

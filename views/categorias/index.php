@@ -1,24 +1,24 @@
 <?php
 
-use app\models\Usuarios;
+use app\models\Categorias;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 /** @var yii\web\View $this */
-/** @var app\models\UsuariosSearch $searchModel */
+/** @var app\models\CategoriasSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = Yii::t('app', 'Usuarios');
+$this->title = Yii::t('app', 'Categorias');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="usuarios-index">
+<div class="categorias-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Usuarios'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create Categorias'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php Pjax::begin(); ?>
@@ -30,15 +30,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id_usuario',
+            'id_categoria',
             'nombre',
-            'correo',
-            'contraseña',
-            'fecha_registro',
+            'descripcion:ntext',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Usuarios $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id_usuario' => $model->id_usuario]);
+                'urlCreator' => function ($action, Categorias $model, $key, $index, $column) {
+                    return Url::toRoute([$action, 'id_categoria' => $model->id_categoria]);
                  }
             ],
         ],

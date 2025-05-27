@@ -30,15 +30,35 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'idproductos',
+            'id_producto',
             'nombre',
             'descripcion:ntext',
             'precio',
             'stock',
             [
+                'attribute' => 'id_categoria',
+                'label' => 'Categoría',
+                'value' => function ($model) {
+                    return $model->categoria ? $model->categoria->nombre : '(Sin categoría)';
+                },
+                'filter' => \yii\helpers\ArrayHelper::map(
+                    \app\models\Categorias::find()->all(), 'id_categoria', 'nombre'
+                ),
+            ],
+            [
+                'attribute' => 'imagen_url',
+                'label' => 'Imagen',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return $model->imagen_url
+                        ? Html::img($model->imagen_url, ['style' => 'max-width:60px; max-height:60px;'])
+                        : '(Sin imagen)';
+                },
+            ],
+            [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Productos $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'idproductos' => $model->idproductos]);
+                    return Url::toRoute([$action, 'id_producto' => $model->id_producto]);
                  }
             ],
         ],
